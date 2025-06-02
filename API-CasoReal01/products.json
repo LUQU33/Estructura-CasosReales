@@ -1,0 +1,17 @@
+[
+    {
+        "id":1,
+        "name": "Notebook Lenovo",
+        "description": "Notebook para estudio"
+    },
+    {
+        "id":2,
+        "name": "Mouse Logitech",
+        "description": "Mouse inalámbrico"
+    },
+    {
+        "id":3,
+        "name": "Teclado Redragon",
+        "description": "Teclado mecánico gamer"
+    }
+]
