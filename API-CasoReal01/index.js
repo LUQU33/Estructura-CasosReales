@@ -31,8 +31,24 @@ const server = http.createServer((req, res) => {
         const productId = parseInt(pathParts[2]);
 
         if (req.method === 'GET') {
-            const query = 'SELECT * FROM products WHERE id = ?';
-            conection.query(query, [productId], (err, results) => {
+            if (!productId){
+                // GET all
+                const query = 'SELECT * FROM products'
+                conection.query(query, (err, results) => {
+                    if (err) {
+                    res.writeHead(500, {'Content-Type': 'application/json'});
+                    res.end(JSON.stringify({error: 'Error en la consulta a la base de datos.'}));
+                    return;
+                }
+
+                res.writeHead(200, {'Content-Type': 'application/json'});
+                res.end(JSON.stringify(results));
+
+                });
+            } else {
+                // GET by ID
+                const query = 'SELECT * FROM products WHERE id = ?';
+                conection.query(query, [productId], (err, results) => {
                 if (err) {
                     res.writeHead(500, {'Content-Type': 'application/json'});
                     res.end(JSON.stringify({error: 'Error en la consulta a la base de datos.'}));
@@ -47,6 +63,7 @@ const server = http.createServer((req, res) => {
                     res.end(JSON.stringify({error: 'Producto no encontrado.'}));
                 }
             });
+            }
 
         } else if (req.method === 'POST') {
             let body = '';
